@@ -1,83 +1,57 @@
 ## Texas Advanced Computing Center
-# Django App: "The Example"
+# Django CMS App (for TACC/Core-CMS): "Page Export"
 
-This app [provides something].
+This app exports **rendered draft** CMS page content (placeholder plugin tree) to **DOCX**, with optional Google Drive export planned for a later phase.
 
-- __`__dist-name__`__: `django-tacc-the-example`
-- __`__package_name__`__: `django_tacc_the_example`
-- __`__ClassName__`__: `TheExample`
-- __"App Name"__: "The Example"
+- __Distribution Name__: `djangocms-tacc-page-export`
+- __Package Name__: `djangocms_tacc_page_export`
+- __Class Name__: `TaccsitePageExport`
+- __App Name__: "Page Export"
 
-
-> [!IMPORTANT]
-> After using this repository template for your app:
->
-> 1. Follow [(wiki) Development Quick Start](https://github.com/TACC/Django-App/wiki/Development-Quick-Start).
-> 2. Remove this notice.
-
+See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for product scope, code layout, and delivery steps.
 
 ## Quick Start
 
-1. Follow [(wiki) Usage Quick Start](https://github.com/TACC/Django-App/wiki/Usage-Quick-Start).
+1. Install the package:
 
-> [!IMPORTANT]
-> After using this repository template for your app:
->
-> 1. Choose or replace all the step 2's with step(s) specific to your app.
-> 2. Remove this notice.
-
-For a website using **TACC/Core-CMS**:
-
-2. Follow https://github.com/TACC/Core-CMS/blob/main/README.md.
-
-For a **Django CMS** plugin:
-
-2. Any step that is specific to the app, such as the steps after this.
-
-    ```python
-    # provide minimal example code that may help the reader
+    ```bash
+    pip install djangocms-tacc-page-export
     ```
 
-3. Add a URLconf in your Django project's `urls.py` like this:
+    For local development from a clone:
 
-    ```python
-        url(r'^sysmon/', include('__package_name__.urls')),
+    ```bash
+    pip install -e .
     ```
 
-4. Add `__APP_NAME_SOME_PROP__` property and value to your Django project's settings:
+2. Add to `INSTALLED_APPS` in your Django project settings:
 
     ```python
-    __APP_NAME_SOME_PROP__ = 'specific_value'
+    INSTALLED_APPS = [
+        ...
+        'djangocms_tacc_page_export',
+        ...
+    ]
     ```
 
-5. Visit [http://your.project.url.host/some-app-url-path/](http://127.0.0.1:8000/ "The URL for your environment may be different than this.").
+3. Run migrations when the app defines models:
+
+    ```bash
+    python manage.py migrate djangocms_tacc_page_export
+    ```
+
+For a site using **TACC/Core-CMS** or **Core-CMS-Port**, follow [Core-CMS Getting Started](https://github.com/TACC/Core-CMS#getting-started) and install this package into the CMS environment (same pattern as [Core-CMS-Plugin-Remote-Content](https://github.com/TACC/Core-CMS-Plugin-Remote-Content)).
 
 ## Usage
 
-> [!IMPORTANT]
-> After using this repository template for your app:
->
-> 1. Replace the steps below with step(s) specific to your app.
-> 2. Remove this notice.
-
-For a website using **TACC/Core-CMS**:
-
-1. Configure the website.
-1. Run the server and load the website.
-1. See server run without error and website matches configuration.
-
-For a **Django CMS** plugin:
-
-1. Add instance of plugin to a page.
-1. Configure the plugin instance.
-1. See plugin render content that matches configuration.
+Phase 1 (in progress): **Download as DOCX** from Generated / port page admin actions in Core-CMS-Port. Until integration ships, this package is a scaffold only.
 
 ## Features
 
-> [!IMPORTANT]
-> After using this repository template for your app:
->
-> 1. Describe the feature(s) of the app, or remove this section.
-> 2. Remove this notice.
+- Planned DOCX export from CMS plugin trees (standard django CMS plugins plus optional TACC readers when Core-CMS apps are present).
+- Planned multi-page export (zip of per-slug `.docx` files).
+- Google Drive save (user OAuth) deferred to Phase 2 — see the plan doc.
 
-…
+## Testing
+
+Follow [TESTING.md](TESTING.md).
