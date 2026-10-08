@@ -11,6 +11,11 @@ from docx.shared import Pt
 
 from djangocms_tacc_page_export.document import Block, PageDocument
 
+# Monospace metadata (Word: Macro Text; fallback font for other editors)
+_METADATA_STYLE = 'Macro Text'
+_METADATA_FONT = 'Courier New'
+_METADATA_SIZE_PT = 10
+
 
 def write_page_document(document: PageDocument, stream: BinaryIO | None = None) -> bytes:
     """Serialize ``document`` to DOCX. Returns bytes when ``stream`` is omitted."""
@@ -30,23 +35,29 @@ def write_page_document(document: PageDocument, stream: BinaryIO | None = None) 
     return buffer.getvalue()
 
 
+def _add_metadata_paragraph(doc: Document, line: str) -> None:
+    paragraph = doc.add_paragraph()
+    paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+    try:
+        paragraph.style = doc.styles[_METADATA_STYLE]
+    except KeyError:
+        pass
+    run = paragraph.add_run(line)
+    run.font.name = _METADATA_FONT
+    run.font.size = Pt(_METADATA_SIZE_PT)
+
+
 def _add_title_block(doc: Document, document: PageDocument) -> None:
     title = document.title.strip() or 'Untitled page'
-    doc.add_heading(title, level=1)
-
-    meta_lines = []
+    meta_lines = [f'Title: {title}']
     if document.slug:
         meta_lines.append(f'Slug: {document.slug}')
     if document.page_url:
         meta_lines.append(f'URL: {document.page_url}')
     for line in meta_lines:
-        paragraph = doc.add_paragraph(line)
-        paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
-        for run in paragraph.runs:
-            run.font.size = Pt(10)
+        _add_metadata_paragraph(doc, line)
 
-    if meta_lines:
-        doc.add_paragraph('')
+    doc.add_paragraph('')
 
 
 def _add_block(doc: Document, block: Block) -> None:
