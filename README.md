@@ -14,6 +14,8 @@ See [docs/plan-core-cms-export-page.md](docs/plan-core-cms-export-page.md) for P
 
 1. Follow [(wiki) Usage Quick Start](https://github.com/TACC/Django-App/wiki/Usage-Quick-Start).
 
+[Core-CMS](https://github.com/TACC/Core-CMS) installs this package from Git (Poetry dependency on a release tag), not PyPI. After install, add `djangocms_tacc_export_page` to `INSTALLED_APPS` and rebuild the CMS image (`make build`). See [docs/plugin-support.md](docs/plugin-support.md) for supported plugins.
+
 ## Usage
 
 1. Open `/admin/cms/page`.
@@ -22,7 +24,7 @@ See [docs/plan-core-cms-export-page.md](docs/plan-core-cms-export-page.md) for P
 4. In menu, click "Download" action.
 5. Verify `.docx` file:
    - renders text content
-   - supports headings andbasic formatting
+   - supports headings and basic formatting
    - renders images
 
 
@@ -40,9 +42,11 @@ See [docs/plan-core-cms-export-page.md](docs/plan-core-cms-export-page.md) for P
 
 ## Features
 
-- DOCX export from CMS plugin trees (standard django CMS plugins plus optional TACC readers when Core-CMS apps are present).
-- Multi-page export (zip of per-slug `.docx` files).
-- Google Drive save (user OAuth) in Phase 2 — see the plan doc.
+- Export content of page (and child pages) as `.docx`
+
+### Planned
+
+- [ ] Save to Google Drive (via user OAuth) ([reference](docs/plan-core-cms-export-page.md))
 
 ## Permissions
 
