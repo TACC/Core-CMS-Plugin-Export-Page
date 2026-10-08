@@ -3,10 +3,10 @@
 
 This app exports **rendered draft** CMS page content (placeholder plugin tree) to **DOCX**, with optional Google Drive export planned for a later phase.
 
-- __`__dist-name__`__: `djangocms-tacc-page-export`
-- __`__package_name__`__: `djangocms_tacc_page_export`
-- __`__ClassName__`__: `TaccsitePageExport`
-- __"App Name"__: "Page Export"
+- __Distribution Name__: `djangocms-tacc-page-export`
+- __Package Name__: `djangocms_tacc_page_export`
+- __Class Name__: `TaccsitePageExport`
+- __App Name__: "Page Export"
 
 See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for Phase 2 (Google Drive) and long-term scope.
 
@@ -15,6 +15,15 @@ See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for P
 1. Follow [(wiki) Usage Quick Start](https://github.com/TACC/Django-App/wiki/Usage-Quick-Start).
 
 ## Usage
+
+1. Open `/admin/cms/page`.
+2. Find a page to export.
+3. Click the ☰ toolbar button for that page.
+4. In menu, click "Download" action.
+5. Verify `.docx` file:
+   - renders text content
+   - supports headings andbasic formatting
+   - renders images
 
 Phase 1: **Download as DOCX** from the CMS page tree when this app is in `INSTALLED_APPS` (wired in [Core-CMS](https://github.com/TACC/Core-CMS)). See [docs/plugin-support.md](docs/plugin-support.md). [Core-CMS-Port](https://github.com/TACC/Core-CMS-Port) integration is documented in [docs/port-integration.md](docs/port-integration.md).
 
