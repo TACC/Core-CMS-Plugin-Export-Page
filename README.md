@@ -38,18 +38,18 @@ See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for P
 | - | - |
 | <img alt="example source page" src="./docs/images/example-source-page.png" /> | <img alt="example output docx" src="./docs/images/example-output-docx.png" /> |
 
-> [!NOTE]
-> To disable support for reading TACC plugins, add setting:
->
-> ```python
-> CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False
-> ```
-
 ## Features
 
 - DOCX export from CMS plugin trees (standard django CMS plugins plus optional TACC readers when Core-CMS apps are present).
 - Multi-page export (zip of per-slug `.docx` files).
 - Google Drive save (user OAuth) in Phase 2 — see the plan doc.
+
+## Settings
+
+- To disable support for reading TACC plugins, add setting:
+    ```python
+    CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False
+    ```
 
 ## Permissions
 
