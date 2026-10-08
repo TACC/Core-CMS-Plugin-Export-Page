@@ -14,8 +14,6 @@ See [docs/plan-core-cms-export-page.md](docs/plan-core-cms-export-page.md) for P
 
 1. Follow [(wiki) Usage Quick Start](https://github.com/TACC/Django-App/wiki/Usage-Quick-Start).
 
-[Core-CMS](https://github.com/TACC/Core-CMS) installs this package from Git (Poetry dependency on a release tag), not PyPI. After install, add `djangocms_tacc_export_page` to `INSTALLED_APPS` and rebuild the CMS image (`make build`). See [docs/plugin-support.md](docs/plugin-support.md) for supported plugins.
-
 ## Usage
 
 1. Open `/admin/cms/page`.
