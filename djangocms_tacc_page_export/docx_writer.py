@@ -7,14 +7,19 @@ from typing import BinaryIO
 
 from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from docx.oxml import OxmlElement
+from docx.oxml.ns import qn
+from docx.opc.constants import RELATIONSHIP_TYPE as RT
 from docx.shared import Pt
 
-from djangocms_tacc_page_export.document import Block, PageDocument
+from djangocms_tacc_page_export.document import Block, InlineSpan, PageDocument
 
 # Monospace metadata (Word: Macro Text; fallback font for other editors)
 _METADATA_STYLE = 'Macro Text'
 _METADATA_FONT = 'Courier New'
 _METADATA_SIZE_PT = 10
+_CODE_FONT = 'Courier New'
+_LINK_COLOR = '0563C1'
 
 
 def write_page_document(document: PageDocument, stream: BinaryIO | None = None) -> bytes:
@@ -60,6 +65,59 @@ def _add_title_block(doc: Document, document: PageDocument) -> None:
     doc.add_paragraph('')
 
 
+def _add_hyperlink(paragraph, text: str, url: str, span: InlineSpan) -> None:
+    part = paragraph.part
+    r_id = part.relate_to(url, RT.HYPERLINK, is_external=True)
+    hyperlink = OxmlElement('w:hyperlink')
+    hyperlink.set(qn('r:id'), r_id)
+
+    run = OxmlElement('w:r')
+    r_pr = OxmlElement('w:rPr')
+    if span.bold:
+        r_pr.append(OxmlElement('w:b'))
+    if span.italic:
+        r_pr.append(OxmlElement('w:i'))
+    if span.code:
+        r_fonts = OxmlElement('w:rFonts')
+        r_fonts.set(qn('w:ascii'), _CODE_FONT)
+        r_fonts.set(qn('w:hAnsi'), _CODE_FONT)
+        r_pr.append(r_fonts)
+    underline = OxmlElement('w:u')
+    underline.set(qn('w:val'), 'single')
+    r_pr.append(underline)
+    color = OxmlElement('w:color')
+    color.set(qn('w:val'), _LINK_COLOR)
+    r_pr.append(color)
+    run.append(r_pr)
+
+    text_element = OxmlElement('w:t')
+    text_element.text = text
+    run.append(text_element)
+    hyperlink.append(run)
+    paragraph._p.append(hyperlink)
+
+
+def _add_span_run(paragraph, span: InlineSpan) -> None:
+    if span.url:
+        _add_hyperlink(paragraph, span.text, span.url, span)
+        return
+    run = paragraph.add_run(span.text)
+    if span.bold:
+        run.bold = True
+    if span.italic:
+        run.italic = True
+    if span.code:
+        run.font.name = _CODE_FONT
+
+
+def _add_rich_paragraph(doc: Document, block: Block, *, style: str | None = None) -> None:
+    paragraph = doc.add_paragraph(style=style)
+    spans = block.runs or (InlineSpan(block.text),)
+    for span in spans:
+        if span.text:
+            _add_span_run(paragraph, span)
+
+
 def _add_block(doc: Document, block: Block) -> None:
     if block.kind == 'heading1':
         doc.add_heading(block.text, level=1)
@@ -71,13 +129,18 @@ def _add_block(doc: Document, block: Block) -> None:
         doc.add_heading(block.text, level=3)
         return
     if block.kind == 'bullet':
-        doc.add_paragraph(block.text, style='List Bullet')
+        _add_rich_paragraph(doc, block, style='List Bullet')
         return
     if block.kind == 'link_line':
         paragraph = doc.add_paragraph()
         if block.url:
-            paragraph.add_run(f'{block.text} ({block.url})')
+            _add_hyperlink(
+                paragraph,
+                block.text,
+                block.url,
+                InlineSpan(block.text, url=block.url),
+            )
         else:
             paragraph.add_run(block.text)
         return
-    doc.add_paragraph(block.text)
+    _add_rich_paragraph(doc, block)

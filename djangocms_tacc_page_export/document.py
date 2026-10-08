@@ -16,10 +16,20 @@ BlockKind = Literal[
 
 
 @dataclass(frozen=True)
+class InlineSpan:
+    text: str
+    bold: bool = False
+    italic: bool = False
+    code: bool = False
+    url: Optional[str] = None
+
+
+@dataclass(frozen=True)
 class Block:
     kind: BlockKind
     text: str
     url: Optional[str] = None
+    runs: tuple[InlineSpan, ...] = ()
 
 
 @dataclass
