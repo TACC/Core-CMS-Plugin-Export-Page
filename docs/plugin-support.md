@@ -10,7 +10,7 @@ Export walks the draft **content** placeholder plugin tree. Layout plugins pass 
 | Bootstrap4 Link / Button | Link line (`label (url)`) |
 | Bootstrap4 Alert | Children only |
 | Snippet | Snippet HTML → blocks (when `djangocms_snippet` is installed) |
-| TACC Site Section | Section label → heading 2, then children |
+| TACC Site Section | Children only (Name/label is editor-only, not exported) |
 | TACC Site Card | Children only |
 | Other | Children, then plain `body` / `name` / `label` / `title` if present |
 
