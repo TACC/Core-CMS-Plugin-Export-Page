@@ -14,4 +14,4 @@ Export walks the draft **content** placeholder plugin tree. Layout plugins pass 
 | TACC Site Card | Children only |
 | Other | Children, then plain `body` / `name` / `label` / `title` if present |
 
-Unknown plugins are skipped after the fallback pass. Set `CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False` to omit TACC Site readers even when those apps are installed.
+Unknown plugins are skipped after the fallback pass. Set `CMS_EXPORT_PAGE_SHOULD_READ_TACCSITE_PLUGINS = False` to omit TACC Site readers even when those apps are installed.

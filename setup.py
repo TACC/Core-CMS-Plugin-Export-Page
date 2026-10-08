@@ -8,14 +8,14 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='djangocms-tacc-page-export',
-    version='0.1.0',
+    name='djangocms-tacc-export-page',
+    version='0.2.0',
     packages=find_packages(),
     include_package_data=True,
     license='BSD License',
     description='A DjangoCMS app (for TACC Core CMS) to export rendered page content to DOCX.',
     long_description=README,
-    url='https://github.com/TACC/Core-CMS-Plugin-Page-Export/',
+    url='https://github.com/TACC/Core-CMS-Plugin-Export-Page/',
     author='TACC ACI WMA, TACC COA CMD',
     author_email='wma-portals@tacc.utexas.edu, coa-cmd@tacc.utexas.edu',
     # SEE: https://packaging.python.org/discussions/install-requires-vs-requirements/

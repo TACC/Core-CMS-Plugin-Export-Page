@@ -1,0 +1,45 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% block bodyclass %}djangocms-admin-style{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+&rsaquo; <a href="{% url opts|admin_urlname:'change' page.pk|admin_urlquote %}">{{ page|truncatewords:"18" }}</a>
+&rsaquo; {{ title }}
+</div>
+{% endblock %}
+
+{% block content %}
+<p>{% blocktranslate with page_title=page %}Choose which draft pages to include in the Word document for <strong>{{ page_title }}</strong>.{% endblocktranslate %}</p>
+
+<form method="post" class="cms-export-page-scope">{% csrf_token %}
+<fieldset class="module aligned">
+    <legend>{% translate "Pages to export" %}</legend>
+    <ul class="cms-export-page-scope-options">
+        <li>
+            <label>
+                <input type="radio" name="include_children" value="0" checked>
+                {% translate "This page only" %}
+            </label>
+        </li>
+        <li>
+            <label>
+                <input type="radio" name="include_children" value="1">
+                {% blocktranslate count counter=child_count %}This page and {{ counter }} child page{% plural %}This page and {{ counter }} child pages{% endblocktranslate %}
+            </label>
+            {% if export_pages %}
+            <ul class="cms-export-page-scope-pages">{{ export_pages|unordered_list }}</ul>
+            {% endif %}
+        </li>
+    </ul>
+</fieldset>
+<div class="submit-row">
+    <input class="cms-btn cms-btn-action" type="submit" value="{% translate 'Download' %}">
+    <a href="{% url opts|admin_urlname:'changelist' %}" class="button cancel-link">{% translate 'Cancel' %}</a>
+</div>
+</form>
+{% endblock content %}
