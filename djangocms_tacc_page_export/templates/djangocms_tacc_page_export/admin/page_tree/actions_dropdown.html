@@ -6,7 +6,8 @@
         <li class="cms-pagetree-dropdown-separator">&nbsp;</li>
         <li>
             <a href="{% url opts|admin_urlname:'export_docx' page.id %}">
-                <span>{% trans "Download as DOCX…" %}</span>
+                <span class="cms-icon cms-icon-pin" aria-hidden="true"></span>
+                <span>{% trans "Download…" %}</span>
             </a>
         </li>
     {% endif %}

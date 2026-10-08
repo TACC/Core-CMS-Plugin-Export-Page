@@ -14,5 +14,5 @@
 ## Manual Testing
 
 1. In [Core-CMS](https://github.com/TACC/Core-CMS), ensure `djangocms-tacc-page-export` is installed (Poetry path to this repo) and rebuild (`make build`).
-2. Page tree → any page → **Download as DOCX…** (optional **Include child pages**).
+2. Page tree → any page → **Download…** (child scope form when the page has descendants).
 3. Open the `.docx` or `.zip` and confirm content matches the draft **content** placeholder.

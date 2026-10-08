@@ -26,7 +26,7 @@ CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False
 
 ## Permissions
 
-Only **superusers** and **staff users who can edit a page** can export that page’s draft content (toolbar **Download**, page-tree **Download as DOCX…**, and the export URL all use django CMS **change page** permission). Staff without edit access on a page do not see the actions and cannot download via the admin URL.
+Only **superusers** and **staff users who can edit a page** can export that page’s draft content (toolbar **Download**, page-tree **Download…**, and the export URL all use django CMS **change page** permission). Staff without edit access on a page do not see the actions and cannot download via the admin URL.
 
 ## Features
 
