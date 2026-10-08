@@ -24,11 +24,9 @@ TACC/Core-CMS plugin readers in `plugin-readers/tacc/` register automatically wh
 CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False
 ```
 
-Limit which pages show the export action (callable or dotted path; default is all pages):
+## Permissions
 
-```python
-CMS_PAGE_EXPORT_PAGE_QUALIFIER = 'myapp.export.page_qualifies'
-```
+Only **superusers** and **staff users who can edit a page** can export that page’s draft content (toolbar **Download**, page-tree **Download as DOCX…**, and the export URL all use django CMS **change page** permission). Staff without edit access on a page do not see the actions and cannot download via the admin URL.
 
 ## Features
 
