@@ -32,13 +32,13 @@ Export **rendered draft** content from Generated / CMS pages (placeholder plugin
 Export **must** be split in code, not only in docs:
 
 ```
-readers/
+plugin-readers/
   standard/     # django CMS + djangocms-bootstrap4 (etc.) — always available
   tacc/         # Taccsite Card, Section, Link, … — registered only if Core-CMS apps present
 registry.py     # dispatches by plugin model; setting to disable TACC layer
 ```
 
-- Non–Core-CMS installs: `CMS_PAGE_EXPORT_TACC_READERS = False` (or omit TACC apps → auto-off).
+- Non–Core-CMS installs: `CMS_PAGE_EXPORT_TACC_PLUGIN_READERS = False` (or omit TACC apps → auto-off).
 - Unknown plugins: skip or plain-text fallback (documented per release).
 
 ---
@@ -118,5 +118,5 @@ Implementation can start in **Core-CMS-Port** calling into the export package on
 ## Success criteria
 
 - Phase 1: editor downloads DOCX from Generated page tree with no Google setup.
-- Package installable without TACC plugins; TACC readers enhance output when present.
+- Package installable without TACC plugins; TACC plugin readers enhance output when present.
 - Phase 2 documented and ticketed, not shipped in Phase 1.
