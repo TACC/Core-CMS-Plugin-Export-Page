@@ -13,7 +13,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     license='BSD License',
-    description='A Django CMS app (for TACC Core CMS) to export rendered page content to DOCX.',
+    description='A DjangoCMS app (for TACC Core CMS) to export rendered page content to DOCX.',
     long_description=README,
     url='https://github.com/TACC/Core-CMS-Plugin-Page-Export/',
     author='TACC ACI WMA, TACC COA CMD',
