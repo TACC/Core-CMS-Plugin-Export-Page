@@ -1,4 +1,4 @@
-"""Shared confirm-view helpers."""
+"""Helpers for the export scope form (pages with children)."""
 
 from __future__ import annotations
 

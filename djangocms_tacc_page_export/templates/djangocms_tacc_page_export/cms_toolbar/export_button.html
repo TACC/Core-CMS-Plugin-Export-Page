@@ -1,0 +1,9 @@
+{% load i18n %}{% spaceless %}
+<div class="cms-toolbar-item cms-toolbar-item-buttons cms-toolbar-item-page-export">
+    <a class="cms-btn cms-page-export-toolbar-btn"
+        href="{{ export_url }}"
+        title="{% trans 'Download as DOCX…' %}">
+        {% trans "Download" %}
+    </a>
+</div>
+{% endspaceless %}

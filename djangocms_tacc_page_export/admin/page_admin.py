@@ -7,22 +7,16 @@ from django.core.exceptions import PermissionDenied
 from django.http import FileResponse
 from django.shortcuts import redirect, render
 from django.urls import re_path
-from django.utils.html import format_html
-from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 
 from cms.admin.pageadmin import PageAdmin
-from djangocms_tacc_page_export.admin.confirm import nested_page_list
+from djangocms_tacc_page_export.admin.scope import nested_page_list
 from djangocms_tacc_page_export.export import export_pages_download
-from djangocms_tacc_page_export.page_scope import (
-    descendant_draft_pages,
-    page_qualifies_for_export,
-    pages_for_export,
-)
+from djangocms_tacc_page_export.page_scope import descendant_draft_pages, pages_for_export
 
 
 class PageExportAdminMixin:
-    """Mixin for ``PageAdmin`` — add export URL, confirm view, and actions menu entry."""
+    """Mixin for ``PageAdmin`` — add export URL and actions menu entry."""
 
     actions_menu_template = 'djangocms_tacc_page_export/admin/page_tree/actions_dropdown.html'
 
@@ -39,12 +33,7 @@ class PageExportAdminMixin:
         page = self.get_object(request, object_id=object_id)
         extra = {
             'page_export_show': bool(
-                page
-                and self.has_change_permission(request, obj=page)
-                and page_qualifies_for_export(page)
-            ),
-            'page_export_has_children': bool(
-                page and descendant_draft_pages(page)
+                page and self.has_change_permission(request, obj=page)
             ),
         }
         extra.update(extra_context or {})
@@ -56,42 +45,9 @@ class PageExportAdminMixin:
             raise self._get_404_exception(object_id)
         if not self.has_change_permission(request, obj=page):
             raise PermissionDenied
-        if not page_qualifies_for_export(page):
-            raise self._get_404_exception(object_id)
         return page
 
-    def export_docx(self, request, object_id):
-        page = self._export_page(request, object_id)
-        children_default = request.GET.get('children') == '1'
-        descendants = descendant_draft_pages(page)
-        scope = (
-            f'{page} and its {len(descendants)} child pages'
-            if children_default and descendants
-            else str(page)
-        )
-        if request.method != 'POST':
-            return render(
-                request,
-                'djangocms_tacc_page_export/admin/export_confirm.html',
-                {
-                    **self.admin_site.each_context(request),
-                    'opts': self.opts,
-                    'title': _('Download as DOCX'),
-                    'message': _(
-                        'Export draft content from %(scope)s to a Word document?'
-                    ) % {'scope': scope},
-                    'page': page,
-                    'changed_pages': nested_page_list(
-                        self,
-                        request,
-                        pages_for_export(page, children_default),
-                    ),
-                    'progress_message': _('Building document…'),
-                    'include_children_option': bool(descendants),
-                    'include_children_default': children_default,
-                },
-            )
-        include_children = request.POST.get('include_children') == '1'
+    def _export_download_response(self, request, page, include_children: bool):
         try:
             filename, content_type, payload = export_pages_download(
                 pages_for_export(page, include_children),
@@ -107,6 +63,34 @@ class PageExportAdminMixin:
         )
         response['Content-Length'] = len(payload)
         return response
+
+    def export_docx(self, request, object_id):
+        page = self._export_page(request, object_id)
+        descendants = descendant_draft_pages(page)
+
+        if request.method == 'POST':
+            include_children = request.POST.get('include_children') == '1'
+            return self._export_download_response(request, page, include_children)
+
+        if descendants:
+            return render(
+                request,
+                'djangocms_tacc_page_export/admin/export_scope.html',
+                {
+                    **self.admin_site.each_context(request),
+                    'opts': self.opts,
+                    'title': _('Download as DOCX'),
+                    'page': page,
+                    'child_count': len(descendants),
+                    'export_pages': nested_page_list(
+                        self,
+                        request,
+                        pages_for_export(page, True),
+                    ),
+                },
+            )
+
+        return self._export_download_response(request, page, False)
 
 
 class PageExportPageAdmin(PageExportAdminMixin, PageAdmin):
