@@ -40,9 +40,11 @@ See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for P
 
 ## Features
 
-- DOCX export from CMS plugin trees (standard django CMS plugins plus optional TACC readers when Core-CMS apps are present).
-- Multi-page export (zip of per-slug `.docx` files).
-- Google Drive save (user OAuth) in Phase 2 — see the plan doc.
+- Export content of page (and child pages) as `.docx`
+
+### Planned
+
+- [ ] Save to Google Drive (via user OAuth) ([reference](plan-core-cms-page-export.md))
 
 ## Settings
 
