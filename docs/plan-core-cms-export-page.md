@@ -35,11 +35,10 @@ Export **must** be split in code, not only in docs:
 plugin-readers/
   standard/     # django CMS + djangocms-bootstrap4 (etc.) — always available
   tacc/         # Taccsite Card, Section, Link, … — registered only if Core-CMS apps present
-registry.py     # dispatches by plugin model; setting to disable TACC layer
+registry.py     # dispatches by plugin model
 ```
 
 - TACC `plugin-readers/tacc/` register when their Django apps are installed (`apps.is_installed`); omit Taccsite apps → no TACC readers.
-- Optional opt-out: `CMS_EXPORT_PAGE_SHOULD_READ_TACCSITE_PLUGINS = False` (standard readers only).
 - Unknown plugins: skip or plain-text fallback (documented per release).
 
 ---

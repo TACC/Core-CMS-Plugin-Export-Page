@@ -38,13 +38,6 @@ See [docs/plan-core-cms-export-page.md](docs/plan-core-cms-export-page.md) for P
 | - | - |
 | <img alt="example source page" src="./docs/images/example-source-page.png" /> | <img alt="example output docx" src="./docs/images/example-output-docx.png" /> |
 
-> [!NOTE]
-> To disable support for reading TACC plugins, add setting:
-
-> ```python
-> CMS_EXPORT_PAGE_SHOULD_READ_TACCSITE_PLUGINS = False
-> ```
-
 ## Features
 
 - DOCX export from CMS plugin trees (standard django CMS plugins plus optional TACC readers when Core-CMS apps are present).
