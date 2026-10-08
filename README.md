@@ -1,14 +1,14 @@
 ## Texas Advanced Computing Center
-# Django CMS App: "Page Export"
+# Django CMS App: "Export Page"
 
 This app exports **rendered draft** CMS page content (placeholder plugin tree) to **DOCX**, with optional Google Drive export planned for a later phase.
 
-- __Distribution Name__: `djangocms-tacc-page-export`
-- __Package Name__: `djangocms_tacc_page_export`
-- __Class Name__: `TaccsitePageExport`
-- __App Name__: "Page Export"
+- __Distribution Name__: `djangocms-tacc-export-page`
+- __Package Name__: `djangocms_tacc_export_page`
+- __Class Name__: `TaccsiteExportPage`
+- __App Name__: "Export Page"
 
-See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for Phase 2 (Google Drive) and long-term scope.
+See [docs/plan-core-cms-export-page.md](docs/plan-core-cms-export-page.md) for Phase 2 (Google Drive) and long-term scope.
 
 ## Quick Start
 
@@ -40,18 +40,9 @@ See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for P
 
 ## Features
 
-- Export content of page (and child pages) as `.docx`
-
-### Planned
-
-- [ ] Save to Google Drive (via user OAuth) ([reference](plan-core-cms-page-export.md))
-
-## Settings
-
-- To disable support for reading TACC plugins, add setting:
-    ```python
-    CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False
-    ```
+- DOCX export from CMS plugin trees (standard django CMS plugins plus optional TACC readers when Core-CMS apps are present).
+- Multi-page export (zip of per-slug `.docx` files).
+- Google Drive save (user OAuth) in Phase 2 — see the plan doc.
 
 ## Permissions
 
