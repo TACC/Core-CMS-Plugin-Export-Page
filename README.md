@@ -19,6 +19,12 @@ See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for p
 
 Phase 1 (in progress): **Download as DOCX** from Generated / port page admin actions in Core-CMS-Port. Until integration ships, this package is a scaffold only.
 
+TACC/Core-CMS plugin readers in `plugin-readers/tacc/` register automatically when the corresponding apps are in `INSTALLED_APPS` (same idea as `apps.is_installed()` elsewhere in Core-CMS). To export with standard django CMS readers only, even when Taccsite apps are installed:
+
+```python
+CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False
+```
+
 ## Features
 
 - **Planned** DOCX export from CMS plugin trees (standard django CMS plugins plus optional TACC readers when Core-CMS apps are present).

@@ -38,7 +38,8 @@ plugin-readers/
 registry.py     # dispatches by plugin model; setting to disable TACC layer
 ```
 
-- Non–Core-CMS installs: `CMS_PAGE_EXPORT_TACC_PLUGIN_READERS = False` (or omit TACC apps → auto-off).
+- TACC `plugin-readers/tacc/` register when their Django apps are installed (`apps.is_installed`); omit Taccsite apps → no TACC readers.
+- Optional opt-out: `CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False` (standard readers only).
 - Unknown plugins: skip or plain-text fallback (documented per release).
 
 ---
