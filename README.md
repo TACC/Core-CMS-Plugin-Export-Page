@@ -40,7 +40,7 @@ See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for P
 
 > [!NOTE]
 > To disable support for reading TACC plugins, add setting:
-
+>
 > ```python
 > CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False
 > ```
