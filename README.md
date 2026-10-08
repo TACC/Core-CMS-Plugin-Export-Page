@@ -14,6 +14,7 @@ See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for p
 ## Quick Start
 
 1. Follow [(wiki) Usage Quick Start](https://github.com/TACC/Django-App/wiki/Usage-Quick-Start).
+2. Follow https://github.com/TACC/Core-CMS/blob/main/README.md.
 
 ## Usage
 
