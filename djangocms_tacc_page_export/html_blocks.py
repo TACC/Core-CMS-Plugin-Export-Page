@@ -18,6 +18,12 @@ _HEADING_MAP = {
     'h6': 'heading3',
 }
 
+# Block-level tags that should split export into multiple DOCX blocks.
+_FLOW_BREAKING_TAGS = frozenset(
+    _HEADING_MAP.keys()
+    | {'p', 'ul', 'ol', 'li', 'pre', 'blockquote', 'table', 'hr', 'dl', 'dt', 'dd'}
+)
+
 _WHITESPACE_RE = re.compile(r'\s+')
 
 
@@ -34,10 +40,21 @@ def html_to_blocks(html: str) -> list[Block]:
     if not root:
         return []
 
+    if not _has_flow_breaking_descendant(root):
+        text = collapse_whitespace(root.get_text(' ', strip=True))
+        return [Block('paragraph', text)] if text else []
+
     blocks: list[Block] = []
     for block in _iter_blocks(root):
         blocks.extend(_blocks_for_element(block))
     return [block for block in blocks if block.text.strip()]
+
+
+def _has_flow_breaking_descendant(root: Tag) -> bool:
+    for element in root.descendants:
+        if isinstance(element, Tag) and element.name in _FLOW_BREAKING_TAGS:
+            return True
+    return False
 
 
 def _iter_blocks(root: Tag) -> Iterable[Tag]:

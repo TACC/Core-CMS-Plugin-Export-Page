@@ -10,3 +10,14 @@ class HtmlToBlocksTests(SimpleTestCase):
         kinds = [block.kind for block in blocks]
         self.assertEqual(kinds, ['heading2', 'paragraph', 'bullet', 'bullet'])
         self.assertEqual(blocks[0].text, 'About')
+
+    def test_inline_phrasing_in_one_paragraph(self):
+        html = (
+            '<strong>Primary admonition.</strong> '
+            'Appearance: admonition; context <code>primary</code>.'
+        )
+        blocks = html_to_blocks(html)
+        self.assertEqual(len(blocks), 1)
+        self.assertEqual(blocks[0].kind, 'paragraph')
+        self.assertIn('Primary admonition.', blocks[0].text)
+        self.assertIn('primary', blocks[0].text)
