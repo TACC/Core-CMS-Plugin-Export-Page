@@ -25,17 +25,25 @@ See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for P
    - supports headings andbasic formatting
    - renders images
 
-Phase 1: **Download as DOCX** from the CMS page tree when this app is in `INSTALLED_APPS` (wired in [Core-CMS](https://github.com/TACC/Core-CMS)). See [docs/plugin-support.md](docs/plugin-support.md). [Core-CMS-Port](https://github.com/TACC/Core-CMS-Port) integration is documented in [docs/port-integration.md](docs/port-integration.md).
 
-TACC/Core-CMS plugin readers in `plugin-readers/tacc/` register automatically when the corresponding apps are in `INSTALLED_APPS` (same idea as `apps.is_installed()` elsewhere in Core-CMS). To export with standard django CMS readers only, even when Taccsite apps are installed:
+| download one via Page menu | download many via Page menu |
+| - | - |
+| <img alt="download one via page menu" src="./docs/images/download-one-via-page-menu.png" /> | <img alt="download many via page menu" src="./docs/images/download-many-via-page-menu.png" /> |
 
-```python
-CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False
-```
+| download one via Page toolbar |
+| - |
+| <img alt="download one via page toolbar" src="./docs/images/download-one-via-page-toolbar.png" /> |
 
-## Permissions
+| example source page | example output docx |
+| - | - |
+| <img alt="example source page" src="./docs/images/example-source-page.png" /> | <img alt="example output docx" src="./docs/images/example-output-docx.png" /> |
 
-Only **superusers** and **staff users who can edit a page** can export that page’s draft content (toolbar **Download**, page-tree **Download…**, and the export URL all use django CMS **change page** permission). Staff without edit access on a page do not see the actions and cannot download via the admin URL.
+> [!NOTE]
+> To disable support for reading TACC plugins, add setting:
+
+> ```python
+> CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False
+> ```
 
 ## Features
 
@@ -43,6 +51,13 @@ Only **superusers** and **staff users who can edit a page** can export that page
 - Multi-page export (zip of per-slug `.docx` files).
 - Google Drive save (user OAuth) in Phase 2 — see the plan doc.
 
-## Testing
+## Permissions
 
-Follow [TESTING.md](TESTING.md).
+Only **superusers** and **staff users who can edit a page** can export that page’s draft content.
+
+<details>
+<summary>Why?</summary>
+
+Because toolbar, page-tree, and the export URL all use django CMS **change page** permission. So staff without edit access on a page do not see the actions and cannot download via the admin URL.
+
+</details>
