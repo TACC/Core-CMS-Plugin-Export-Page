@@ -79,7 +79,7 @@ class PageExportAdminMixin:
                 {
                     **self.admin_site.each_context(request),
                     'opts': self.opts,
-                    'title': _('Download as DOCX'),
+                    'title': _('Download…'),
                     'page': page,
                     'child_count': len(descendants),
                     'export_pages': nested_page_list(

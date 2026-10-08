@@ -1,6 +1,6 @@
 # django CMS admin icon font (`cms-icon-*`)
 
-Page export uses **text only** (toolbar **Export**, tree **Download as DOCX…**) — there is no suitable download glyph in this font.
+Page tree **Download…** uses `cms-icon-pin`. Toolbar **Download** is text only (no icon in that control).
 
 ## Preview glyphs (visual)
 
