@@ -8,31 +8,31 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='__dist-name__',
+    name='djangocms-tacc-page-export',
     version='0.1.0',
     packages=find_packages(),
     include_package_data=True,
     license='BSD License',
-    description='A DjangoCMS plugin (for TACC Core CMS) to ______.',
+    description='A DjangoCMS app (for TACC Core CMS) to export rendered page content to DOCX.',
     long_description=README,
-    url='https://github.com/TACC/__Repo_Name__/',
+    url='https://github.com/TACC/Core-CMS-Plugin-Page-Export/',
     author='TACC ACI WMA, TACC COA CMD',
     author_email='wma-portals@tacc.utexas.edu, coa-cmd@tacc.utexas.edu',
     # SEE: https://packaging.python.org/discussions/install-requires-vs-requirements/
     install_requires=[
         'Django>=3.2',
         'django-cms>=3.7.4,<4',
+        'python-docx>=1.1.0',
     ],
     # SEE: https://pypi.org/classifiers/
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 2.2.16',
+        'Framework :: Django :: 3.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3',
     ],
 )
