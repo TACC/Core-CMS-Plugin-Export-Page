@@ -13,8 +13,6 @@
 
 ## Manual Testing
 
-Manual export flows will be documented when Phase 1 admin integration lands in Core-CMS-Port. Until then, verify the package installs and the app loads:
-
-1. Follow [TACC/Core-CMS "Getting Started"](https://github.com/TACC/Core-CMS#getting-started) (use a **git worktree** if another checkout already owns `main`).
-2. Add `djangocms_tacc_page_export` to `INSTALLED_APPS` and install this repo (`pip install -e /path/to/Core-CMS-Plugin-Page-Export`).
-3. Run `python manage.py check` with no errors.
+1. In [Core-CMS](https://github.com/TACC/Core-CMS), ensure `djangocms-tacc-page-export` is installed (Poetry path to this repo) and rebuild (`make build`).
+2. Page tree → any page → **Download as DOCX…** (optional **Include child pages**).
+3. Open the `.docx` or `.zip` and confirm content matches the draft **content** placeholder.

@@ -1,0 +1,1 @@
+default_app_config = 'djangocms_tacc_page_export.apps.TaccsitePageExportConfig'
