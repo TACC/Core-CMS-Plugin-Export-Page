@@ -8,8 +8,7 @@ This app exports **rendered draft** CMS page content (placeholder plugin tree) t
 - __`__ClassName__`__: `TaccsitePageExport`
 - __"App Name"__: "Page Export"
 
-<!-- Remove plan doc link after export is implemented. -->
-See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for product scope, code layout, and delivery steps.
+See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for Phase 2 (Google Drive) and long-term scope.
 
 ## Quick Start
 
@@ -17,7 +16,7 @@ See [docs/plan-core-cms-page-export.md](docs/plan-core-cms-page-export.md) for p
 
 ## Usage
 
-Phase 1 (in progress): **Download as DOCX** from Generated / port page admin actions in Core-CMS-Port. Until integration ships, this package is a scaffold only.
+Phase 1: **Download as DOCX** from the CMS page tree when this app is in `INSTALLED_APPS` (wired in [Core-CMS](https://github.com/TACC/Core-CMS)). See [docs/plugin-support.md](docs/plugin-support.md). [Core-CMS-Port](https://github.com/TACC/Core-CMS-Port) integration is documented in [docs/port-integration.md](docs/port-integration.md).
 
 TACC/Core-CMS plugin readers in `plugin-readers/tacc/` register automatically when the corresponding apps are in `INSTALLED_APPS` (same idea as `apps.is_installed()` elsewhere in Core-CMS). To export with standard django CMS readers only, even when Taccsite apps are installed:
 
@@ -25,11 +24,15 @@ TACC/Core-CMS plugin readers in `plugin-readers/tacc/` register automatically wh
 CMS_PAGE_EXPORT_SHOULD_READ_TACCSITE_PLUGINS = False
 ```
 
+## Permissions
+
+Only **superusers** and **staff users who can edit a page** can export that page’s draft content (toolbar **Download**, page-tree **Download as DOCX…**, and the export URL all use django CMS **change page** permission). Staff without edit access on a page do not see the actions and cannot download via the admin URL.
+
 ## Features
 
-- **Planned** DOCX export from CMS plugin trees (standard django CMS plugins plus optional TACC readers when Core-CMS apps are present).
-- **Planned** multi-page export (zip of per-slug `.docx` files).
-- **Planned** Google Drive save (user OAuth) in Phase 2 — see the plan doc.
+- DOCX export from CMS plugin trees (standard django CMS plugins plus optional TACC readers when Core-CMS apps are present).
+- Multi-page export (zip of per-slug `.docx` files).
+- Google Drive save (user OAuth) in Phase 2 — see the plan doc.
 
 ## Testing
 

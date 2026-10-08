@@ -23,6 +23,8 @@ setup(
         'Django>=3.2',
         'django-cms>=3.7.4,<4',
         'python-docx>=1.1.0',
+        'beautifulsoup4>=4.9.0',
+        'lxml>=4.6.0',
     ],
     # SEE: https://pypi.org/classifiers/
     classifiers=[
