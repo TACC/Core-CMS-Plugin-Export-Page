@@ -15,3 +15,5 @@ class TaccsitePageExportConfig(AppConfig):
             from djangocms_tacc_page_export.admin import apply_page_export_admin
 
             apply_page_export_admin()
+            # Register toolbar (import side effect).
+            from djangocms_tacc_page_export import cms_toolbar  # noqa: F401
